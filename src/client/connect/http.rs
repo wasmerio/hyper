@@ -658,7 +658,7 @@ fn connect(
         }
     }
 
-    let connect = socket.connect(*addr);
+    let connect = socket.connect(&addr);
     Ok(async move {
         match connect_timeout {
             Some(dur) => match tokio::time::timeout(dur, connect).await {
