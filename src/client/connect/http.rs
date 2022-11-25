@@ -661,12 +661,12 @@ fn connect(
     let connect = socket.connect(&addr);
     Ok(async move {
         match connect_timeout {
-            Some(dur) => match tokio::time::timeout(dur, connect).await {
+            Some(dur) => match tokio::time::timeout(dur, connect) {
                 Ok(Ok(s)) => Ok(s),
                 Ok(Err(e)) => Err(e),
                 Err(e) => Err(io::Error::new(io::ErrorKind::TimedOut, e)),
             },
-            None => connect.await,
+            None => connect,
         }
         .map_err(ConnectError::m("tcp connect error"))
     })
