@@ -641,19 +641,19 @@ fn connect(
     };
 
     if config.reuse_address {
-        if let Err(e) = socket.set_reuseaddr(true) {
+        if let Err(e) = socket.set_reuse_address(true) {
             warn!("tcp set_reuse_address error: {}", e);
         }
     }
 
     if let Some(size) = config.send_buffer_size {
-        if let Err(e) = socket.set_send_buffer_size(size.try_into().unwrap_or(std::u32::MAX)) {
+        if let Err(e) = socket.set_send_buffer_size(size.try_into().unwrap_or(std::usize::MAX)) {
             warn!("tcp set_buffer_size error: {}", e);
         }
     }
 
     if let Some(size) = config.recv_buffer_size {
-        if let Err(e) = socket.set_recv_buffer_size(size.try_into().unwrap_or(std::u32::MAX)) {
+        if let Err(e) = socket.set_recv_buffer_size(size.try_into().unwrap_or(std::usize::MAX)) {
             warn!("tcp set_recv_buffer_size error: {}", e);
         }
     }
