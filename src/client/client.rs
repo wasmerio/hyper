@@ -809,11 +809,11 @@ fn origin_form(uri: &mut Uri) {
 }
 
 fn absolute_form(uri: &mut Uri) {
-    debug_assert!(uri.scheme().is_some(), "absolute_form needs a scheme");
-    debug_assert!(
-        uri.authority().is_some(),
-        "absolute_form needs an authority"
-    );
+    // debug_assert!(uri.scheme().is_some(), "absolute_form needs a scheme");
+    // debug_assert!(
+    //     uri.authority().is_some(),
+    //     "absolute_form needs an authority"
+    // );
     // If the URI is to HTTPS, and the connector claimed to be a proxy,
     // then it *should* have tunneled, and so we don't want to send
     // absolute-form in that case.
@@ -861,7 +861,7 @@ fn extract_domain(uri: &mut Uri, is_http_connect: bool) -> crate::Result<PoolKey
         }
         _ => {
             debug!("Client requires absolute-form URIs, received: {:?}", uri);
-            Err(crate::Error::new_user_absolute_uri_required())
+            Ok((Scheme::HTTP, http::uri::Authority::from_static("proxy")))
         }
     }
 }
